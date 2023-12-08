@@ -4,7 +4,7 @@ import { server } from "../../myServer";
 
 const initialState = {
   sectors: [],
-  loading: false,
+  loading: true,
   error: null,
 };
 
@@ -13,8 +13,8 @@ export const getSectors = createAsyncThunk(
   "sectors/getSectors",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${server}/api/v2/sectors/get-sectors`);
-    //   console.log(response);
+      const response = await axios.get(`${server}/sectors/get-sectors`);
+      //   console.log(response);
       return response.data.sectors;
     } catch (error) {
       return rejectWithValue(error.response.data);
