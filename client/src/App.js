@@ -18,11 +18,6 @@ function App() {
   const sectors = useSelector(selectAllSectors);
   const loading = useSelector(selectLoading)
 
-  useEffect(() => {
-    dispatch(getSectors());
-  }, [dispatch]);
-
-  console.log(sectors);
 
   if (loading) {
     // Render a loading indicator here
@@ -33,7 +28,7 @@ function App() {
       <div className=" w-full min-h-[100vh]">
         <Nav />
         <Routes>
-          <Route path="/" element={<Form />} />
+          <Route path="/form" element={<Form />} />
           <Route path="/user" element={<User />} />
         </Routes>
       </div>
