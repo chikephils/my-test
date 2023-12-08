@@ -26,7 +26,7 @@ const NavUnlisted = styled.ul`
 `;
 
 const links = [
-  { name: "Home", path: "/form" },
+  { name: "Home", path: "/sectors" },
   { name: "User", path: "/user" },
 ];
 
