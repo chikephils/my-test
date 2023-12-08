@@ -14,15 +14,11 @@ import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 
 function App() {
-  const dispatch = useDispatch();
-  const sectors = useSelector(selectAllSectors);
-  const loading = useSelector(selectLoading)
+  // const dispatch = useDispatch();
+  // const sectors = useSelector(selectAllSectors);
+  // const loading = useSelector(selectLoading)
 
 
-  if (loading) {
-    // Render a loading indicator here
-    return <p>Loading...</p>;
-  }
   return (
     <>
       <div className=" w-full min-h-[100vh]">
