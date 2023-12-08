@@ -16,18 +16,24 @@ import { Route, Routes } from "react-router-dom";
 function App() {
   const dispatch = useDispatch();
   const sectors = useSelector(selectAllSectors);
+  const loading = useSelector(selectLoading)
 
   useEffect(() => {
     dispatch(getSectors());
   }, [dispatch]);
 
   console.log(sectors);
+
+  if (loading) {
+    // Render a loading indicator here
+    return <p>Loading...</p>;
+  }
   return (
     <>
       <div className=" w-full min-h-[100vh]">
         <Nav />
         <Routes>
-          <Route path="/sectors" element={<Form />} />
+          <Route path="/" element={<Form />} />
           <Route path="/user" element={<User />} />
         </Routes>
       </div>
