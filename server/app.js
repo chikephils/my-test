@@ -5,11 +5,18 @@ const cors = require("cors");
 const ErrorHandler = require("./middleware/Error");
 
 app.use(
-  cors({ origin: ["https://my-test-client.vercel.app"], credentials: true })
+  cors({
+    origin: ["https://my-test-client.vercel.app"],
+    methods: ["POST", "GET"],
+    credentials: true,
+  })
 );
+app.use(express.json());
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
-app.use(express.json());
+app.use("/", (req, res) => {
+  res.send("Hello world!");
+});
 
 //config
 if (process.env.NODE_ENV !== "PRODUCTION") {
@@ -26,9 +33,5 @@ app.use("/api/v2/user", user);
 app.use("/api/v2/sectors", sector);
 
 app.use(ErrorHandler);
-
-app.use("/test", (req, res) => {
-  res.send("Hello world!");
-});
 
 module.exports = app;

@@ -27,7 +27,7 @@ function App() {
       <div className=" w-full min-h-[100vh]">
         <Nav />
         <Routes>
-          <Route path="/" element={<Form />} />
+          <Route path="/form" element={<Form />} />
           <Route path="/user" element={<User />} />
         </Routes>
       </div>
