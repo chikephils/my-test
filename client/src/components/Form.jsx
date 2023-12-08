@@ -22,6 +22,7 @@ const Form = () => {
   const [showLoader, setShowLoader] = useState(false);
   console.log(user);
 
+  
   const filteredSectors =
     allSectors?.find((data) => data.category === category)?.sectors || [];
 

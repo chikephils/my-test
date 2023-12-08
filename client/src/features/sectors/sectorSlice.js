@@ -4,7 +4,7 @@ import { server } from "../../myServer";
 
 const initialState = {
   sectors: [],
-  loading: true,
+  loading: false,
   error: null,
 };
 
