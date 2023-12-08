@@ -4,11 +4,11 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const ErrorHandler = require("./middleware/Error");
 
+app.use(
+  cors({ origin: ["https://my-test-client.vercel.app"], credentials: true })
+);
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
-app.use(
-  cors({ origin: "https://my-test-client.vercel.app", credentials: true })
-);
 app.use(express.json());
 
 //config
@@ -27,7 +27,7 @@ app.use("/api/v2/sectors", sector);
 
 app.use(ErrorHandler);
 
-app.use("/", (req, res) => {
+app.use("/test", (req, res) => {
   res.send("Hello world!");
 });
 
