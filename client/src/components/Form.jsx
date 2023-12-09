@@ -209,7 +209,7 @@ const Form = () => {
                 type="checkbox"
                 checked={agreed}
                 onChange={hanldeAgreedChange}
-                className="transform scale-150 cursor-pointer mr-5"
+                className="transform scale-150 cursor-pointer mr-5 border-black border-1px"
               />
               <div className="w-full  flex items-center mt-1">
                 <label className="pb-2 text-[20px] font-medium flex items-center">
