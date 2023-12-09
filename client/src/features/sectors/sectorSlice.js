@@ -13,7 +13,7 @@ export const getSectors = createAsyncThunk(
   "sectors/getSectors",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${server}/get-sectors`);
+      const response = await axios.get(`${server}/sectors/get-sectors`);
       //   console.log(response);
       return response.data.sectors;
     } catch (error) {
