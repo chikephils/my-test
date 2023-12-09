@@ -1,10 +1,6 @@
 // Form.js
 import React, { useState, useEffect } from "react";
-import {
-  getSectors,
-  selectAllSectors,
-  selectLoading,
-} from "../features/sectors/sectorSlice";
+import { selectAllSectors } from "../features/sectors/sectorSlice";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { server } from "../myServer";
@@ -24,19 +20,7 @@ const Form = () => {
   const allSectors = useSelector(selectAllSectors);
   const [formErrors, setFormErrors] = useState({});
   const [showLoader, setShowLoader] = useState(false);
-
-  const loading = useSelector(selectLoading);
-
   console.log(user);
-
-  useEffect(() => {
-    dispatch(getSectors());
-  }, [dispatch]);
-
-  if (loading) {
-    // Render a loading indicator here
-    return <p>Loading...</p>;
-  }
 
   const filteredSectors =
     allSectors?.find((data) => data.category === category)?.sectors || [];
