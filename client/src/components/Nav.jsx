@@ -8,7 +8,7 @@ const NavUnlisted = styled.ul`
     text-decoration: none;
   }
   li {
-    color: black;
+    color:white;
     margin: 0 0.8rem;
     font-size: 1.1rem;
     position: relative;
@@ -17,7 +17,7 @@ const NavUnlisted = styled.ul`
 
   a.active {
     li {
-      border-bottom: 2px solid black;
+      border-bottom: 2px solid white;
     }
   }
 
@@ -32,10 +32,10 @@ const links = [
 
 const Nav = () => {
   return (
-    <NavUnlisted className="p-2 bg-green-400 h-[90px] flex items-center 320px:justify-between 400px:justify-end md:justify-end gap-6 fixed top-0 w-full">
+    <NavUnlisted className="p-2 bg-[#2ed742] h-[90px] flex items-center 320px:justify-between 400px:justify-end md:justify-end gap-6 fixed z-50 top-0 w-full shadow-lg">
       {links.map((link, index) => (
         <NavLink
-          className="text-base w-[80px] md:w-[100px] h-[50px] md:h-[50px] bg-slate-50 rounded-lg shadow-lg flex items-center justify-center font-semibold mr-2 ml-2"
+          className="text-base w-[80px] md:w-[100px] h-[50px] md:h-[50px] bg-[#000] text-yellow-50 rounded-lg shadow-lg flex items-center justify-center font-semibold mr-2 ml-2"
           key={index}
           to={link.path}
         >

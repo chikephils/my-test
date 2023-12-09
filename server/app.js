@@ -6,7 +6,7 @@ const ErrorHandler = require("./middleware/Error");
 
 app.use(
   cors({
-    origin: ["https://my-test-client.vercel.app"],
+    origin: ["https://my-test-client.vercel.app", "https://localhost:3000"],
     methods: ["POST", "GET"],
     credentials: true,
   })
@@ -14,7 +14,7 @@ app.use(
 app.use(express.json());
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
-app.use("/test", (req, res) => {
+app.use("/", (req, res) => {
   res.send("Hello world!");
 });
 

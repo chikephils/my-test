@@ -5,8 +5,8 @@ import { FcPortraitMode } from "react-icons/fc";
 const User = () => {
   const user = useSelector((state) => state.user);
   return (
-    <div className="w-full flex items-center justify-center mt-[92px] fixed ">
-      <div className="w-full md:w-[70%] lg:w-[40%] px-2 mt-8">
+    <div className="w-full h-[100vh] flex justify-center fixed  bg-[#d2cccc]">
+      <div className="w-full 600px:w-[70%] md:w-[70%] lg:w-[40%] px-2 320px:mt-14 600px:mt-16 md:mt-20 lg:mt-20">
         <div className="flex items-center justify-center mb-4">
           <FcPortraitMode size={75} />
         </div>

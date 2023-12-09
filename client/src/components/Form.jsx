@@ -1,16 +1,21 @@
 // Form.js
 import React, { useState, useEffect } from "react";
-import { selectAllSectors } from "../features/sectors/sectorSlice";
+import {
+  selectAllSectors,
+  selectLoading,
+} from "../features/sectors/sectorSlice";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { server } from "../myServer";
 import { toast } from "react-toastify";
 import SmallLoader from "./SmallLoader";
 import { setUser } from "../features/user/userSlice";
+import Loader from "./Loader";
 
 const Form = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+  const loading = useSelector(selectLoading);
   const [name, setName] = useState(user && user.name ? user.name : "");
   const [category, setCategory] = useState(
     user && user.category ? user.category : ""
@@ -60,7 +65,7 @@ const Form = () => {
       errors.sector = "Sector is required";
     }
     if (agreed === false) {
-      errors.agreed = "Agree to Terms";
+      errors.agreed = "Agree";
     }
 
     setFormErrors(errors);
@@ -97,130 +102,136 @@ const Form = () => {
   };
 
   return (
-    <div className="w-full flex items-center justify-center mt-[92px] fixed ">
-      <div className=" 320px:w-full 400px:w-[90%] 600px:w-[80%] md:w-[60%] px-2 mt-2">
-        <div className="w-full flex items-center justify-center sticky">
-          <h1 className=" text-[20px] font-semibold underline my-4 italic">
-            Please Save your Profile
-          </h1>
+    <div className="w-full h-[100vh] flex items-center justify-center fixed pb-20 bg-[#d2cccc]">
+      {loading ? (
+        <div className="flex items-center justify-center h-[100vh]">
+          <Loader />
         </div>
-
-        <form
-          className="flex flex-col items-center overflow-y-scroll scrollbar-thin h-[70vh] pb-4"
-          onSubmit={handleSubmit}
-        >
-          <div className="w-[100%] flex items-center flex-col 600px:w-[80%] 800px:w-[80%] mt-2">
-            <div className="w-full pl-[3%] flex items-center">
-              <label className="pb-2 320px:text-[20px] text-[22px] font-medium flex items-center">
-                <span>Name</span>
-                <span className="text-red-500 ml-1">*</span>
-              </label>
-              {formErrors.name && (
-                <p className="ml-2 text-red-500">{formErrors.name}</p>
-              )}
-            </div>
-            <input
-              type="name"
-              placeholder={`${user?.name ? user?.name : "Enter your name"}`}
-              value={name}
-              onChange={handleNameChange}
-              className={`cursor-pointer px-3 py-1 w-[95%] mb-4 800px:mb-0 320px:h-[40px] h-[50px] border-black border-[1px] focus:outline-none focus:ring-lime-400 focus:border-lime-500 text-[20px] md:text-[18px] font-normal rounded-md`}
-            />
+      ) : (
+        <div className=" 320px:w-full 400px:w-[90%] 600px:w-[80%] md:w-[60%] px-2 mt-2 mb-8">
+          <div className="w-full flex items-center justify-center sticky">
+            <h1 className=" text-[20px] font-semibold underline my-4 italic">
+              Please Save your Profile
+            </h1>
           </div>
 
-          <div className="w-[100%] flex items-center flex-col 600px:w-[80%] 800px:w-[80%] mt-2">
-            <div className="w-full pl-[3%] flex items-center">
-              <label className="pb-2 320px:text-[20px] text-[22px] font-medium flex items-center">
-                <span>Category</span>
-                <span className="text-red-500 ml-1">*</span>
-              </label>
-              {formErrors.category && (
-                <p className=" ml-2 text-red-500">{formErrors.category}</p>
-              )}
+          <form
+            className="flex flex-col items-center overflow-y-scroll scrollbar-thin h-[70vh] pb-6"
+            onSubmit={handleSubmit}
+          >
+            <div className="w-[100%] flex items-center flex-col 600px:w-[80%] 800px:w-[80%] mt-2">
+              <div className="w-full pl-[3%] flex items-center">
+                <label className="pb-2 text-[20px] font-medium flex items-center">
+                  <span>Name</span>
+                  <span className="text-red-500 ml-1">*</span>
+                </label>
+                {formErrors.name && (
+                  <p className="ml-2 text-red-500">{formErrors.name}</p>
+                )}
+              </div>
+              <input
+                type="name"
+                placeholder={`${user?.name ? user?.name : "Enter your name"}`}
+                value={name}
+                onChange={handleNameChange}
+                className={`cursor-pointer px-3 py-1 w-[95%] mb-4 800px:mb-0 320px:h-[40px] 400px:h-[40px] md:h-[50px] border-black border-[1px] focus:outline-none focus:ring-lime-400 focus:border-lime-500 text-[20px] md:text-[18px] font-normal rounded-md`}
+              />
             </div>
-            <select
-              className="cursor-pointer px-3 py-1 w-[95%] mb-4 800px:mb-0 320px:h-[40px] h-[50px] border-black border-[1px] focus:outline-none focus:ring-lime-400 focus:border-lime-500 320px:text-[20px] md:text-[18px] font-normal rounded-md"
-              value={category}
-              onChange={handleCategoryChange}
-            >
-              <option
-                className="text-[12px] md:text-sm"
-                value="Choose a Category"
+
+            <div className="w-[100%] flex items-center flex-col 600px:w-[80%] 800px:w-[80%] mt-2">
+              <div className="w-full pl-[3%] flex items-center">
+                <label className="pb-2 text-[20px] font-medium flex items-center">
+                  <span>Category</span>
+                  <span className="text-red-500 ml-1">*</span>
+                </label>
+                {formErrors.category && (
+                  <p className=" ml-2 text-red-500">{formErrors.category}</p>
+                )}
+              </div>
+              <select
+                className="cursor-pointer px-3 py-1 w-[95%] mb-4 800px:mb-0 320px:h-[40px] 400px:h-[40px] md:h-[50px] border-black border-[1px] focus:outline-none focus:ring-lime-400 focus:border-lime-500 text-[20px]  font-normal rounded-md"
+                value={category}
+                onChange={handleCategoryChange}
               >
-                Choose a Category
-              </option>
-              {allSectors?.map((data) => (
                 <option
-                  className="text-[12px] md:text-sm font-medium"
-                  key={data._id}
-                  value={data.category}
+                  className="text-[12px] md:text-sm"
+                  value="Choose a Category"
                 >
-                  {data.category}
+                  Choose a Category
                 </option>
-              ))}
-            </select>
-          </div>
-          <div className="w-[100%] flex items-center flex-col 600px:w-[80%] 800px:w-[80%] mt-2">
-            <div className="w-full pl-[3%] flex items-center">
-              <label className="pb-2 320px:text-[20px] text-[22px] font-medium flex items-center">
-                <span>Sector</span>
-                <span className="text-red-500 ml-1">*</span>
-              </label>
-              {formErrors.sector && (
-                <p className=" ml-2 text-red-500">{formErrors.sector}</p>
-              )}
+                {allSectors?.map((data) => (
+                  <option
+                    className="text-[12px] md:text-sm font-medium"
+                    key={data._id}
+                    value={data.category}
+                  >
+                    {data.category}
+                  </option>
+                ))}
+              </select>
             </div>
+            <div className="w-[100%] flex items-center flex-col 600px:w-[80%] 800px:w-[80%] mt-2">
+              <div className="w-full pl-[3%] flex items-center">
+                <label className="pb-2 text-[20px] font-medium flex items-center">
+                  <span>Sector</span>
+                  <span className="text-red-500 ml-1">*</span>
+                </label>
+                {formErrors.sector && (
+                  <p className=" ml-2 text-red-500">{formErrors.sector}</p>
+                )}
+              </div>
 
-            <select
-              className="cursor-pointer px-3 py-1 w-[95%] mb-4 800px:mb-0 320px:h-[40px] h-[50px] border-black border-[1px] focus:outline-none focus:ring-lime-400 focus:border-lime-500 320px:text-[20px] md:text-[18px] font-normal rounded-md"
-              value={sector}
-              onChange={handleSectorChange}
-              disabled={category === "Choose a Category"}
-            >
-              <option
-                className="text-[12px] md:text-sm"
-                value="Choose a Sector"
+              <select
+                className="cursor-pointer px-3 py-1 w-[95%] mb-4 800px:mb-0 320px:h-[40px] 400px:h-[40px] md:h-[50px] border-black border-[1px] focus:outline-none focus:ring-lime-400 focus:border-lime-500 text-[20px] font-normal rounded-md"
+                value={sector}
+                onChange={handleSectorChange}
+                disabled={category === "Choose a Category"}
               >
-                Choose a Sector
-              </option>
-              {filteredSectors.map((sector) => (
                 <option
-                  className="text-[12px] md:text-sm font-medium"
-                  key={sector._id}
-                  value={sector.name}
+                  className="text-[12px] md:text-sm"
+                  value="Choose a Sector"
                 >
-                  {sector.name}
+                  Choose a Sector
                 </option>
-              ))}
-            </select>
-          </div>
-          <div className="w-[100%] flex items-center pl-[3%]  gap-5 600px:w-[80%] 800px:w-[80%] mt-2">
-            <input
-              type="checkbox"
-              checked={agreed}
-              onChange={hanldeAgreedChange}
-              className="transform scale-150 cursor-pointer"
-            />
-            <div className="w-full  flex items-center mt-1">
-              <label className="pb-2 320px:text-[20px] text-[22px] font-medium flex items-center">
-                <span>Agree to Terms</span>
-                <span className="text-red-500 ml-1">*</span>
-              </label>
-              {formErrors.agreed && (
-                <p className=" ml-2 text-red-500">{formErrors.agreed}</p>
-              )}
+                {filteredSectors.map((sector) => (
+                  <option
+                    className="text-[12px] md:text-sm font-medium"
+                    key={sector._id}
+                    value={sector.name}
+                  >
+                    {sector.name}
+                  </option>
+                ))}
+              </select>
             </div>
-          </div>
-          <div className="w-[100%] flex items-center flex-col 600px:w-[50%] 800px:w-[50%] mt-4">
-            <button
-              type="submit"
-              className="w-[95%] bg-black h-[55px] rounded-md text-white text-[18px] font-medium cursor-pointer mb-4 800px:mb-0 600px:mb-0"
-            >
-              {showLoader ? <SmallLoader /> : "Save"}
-            </button>
-          </div>
-        </form>
-      </div>
+            <div className="w-[100%] flex items-center pl-[4%]  600px:w-[80%] 800px:w-[80%] mt-2">
+              <input
+                type="checkbox"
+                checked={agreed}
+                onChange={hanldeAgreedChange}
+                className="transform scale-150 cursor-pointer mr-5"
+              />
+              <div className="w-full  flex items-center mt-1">
+                <label className="pb-2 text-[20px] font-medium flex items-center">
+                  <span>Agree to Terms</span>
+                  <span className="text-red-500 ml-1">*</span>
+                </label>
+                {formErrors.agreed && (
+                  <p className=" ml-2 text-red-500">{formErrors.agreed}</p>
+                )}
+              </div>
+            </div>
+            <div className="w-[100%] flex items-center flex-col 600px:w-[50%] 800px:w-[50%] mt-4">
+              <button
+                type="submit"
+                className="w-[95%] bg-black h-[55px] rounded-md text-white text-[18px] font-medium cursor-pointer mb-4 800px:mb-0 600px:mb-0"
+              >
+                {showLoader ? <SmallLoader /> : "Save"}
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
     </div>
   );
 };
