@@ -102,13 +102,13 @@ const Form = () => {
   };
 
   return (
-    <div className="w-full h-[100vh] flex items-center justify-center fixed pb-20 bg-[#d2cccc]">
+    <div className="w-full h-[90vh] flex items-center justify-center fixed pb-20 bg-[#d2cccc]">
       {loading ? (
         <div className="flex items-center justify-center h-[100vh]">
           <Loader />
         </div>
       ) : (
-        <div className=" 320px:w-full 400px:w-[90%] 600px:w-[80%] md:w-[60%] px-2 mt-2 mb-8">
+        <div className=" 320px:w-full 400px:w-[90%] 600px:w-[80%] md:w-[60%] px-2 mt-12 mb-8">
           <div className="w-full flex items-center justify-center sticky">
             <h1 className=" text-[20px] font-semibold underline my-4 italic">
               Please Save your Profile

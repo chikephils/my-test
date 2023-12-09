@@ -23,7 +23,7 @@ function App() {
     <>
       <div className=" w-full h-auto flex flex-col">
         <Nav />
-        <main className="mt-[90px]">
+        <main className="mt-[70px]">
           <Routes>
             <Route path="/" element={<Form />} />
             <Route path="/user" element={<User />} />
